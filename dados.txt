@@ -1,0 +1,6 @@
+1,a
+2,com
+3,de
+4,em
+5,para
+6,que
