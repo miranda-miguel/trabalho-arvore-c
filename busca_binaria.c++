@@ -1,18 +1,22 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <iostream>
+#include <string>
+#include <cctype>
+#include <sstream>
+#include <fstream>
+#include <cstdlib>
+#include <cstring>
 
-// Estrutura para representar o registro de dados (exemplo de acervo/itens)
+using namespace std;
+
 typedef struct {
     int id;
-    char nome[100];
+    char palavra[100];
 } Registro;
 
-// Função para ler o arquivo e preencher o vetor dinâmico
 int carregar_dados(const char *nome_arquivo, Registro **vetor) {
     FILE *arquivo = fopen(nome_arquivo, "r");
     if (arquivo == NULL) {
-        printf("Erro ao abrir o arquivo %s!\n", nome_arquivo);
+        printf("Erro ao abrir a lista de exclusao: %s!\n", nome_arquivo);
         return -1;
     }
 
@@ -21,21 +25,16 @@ int carregar_dados(const char *nome_arquivo, Registro **vetor) {
     *vetor = (Registro *) malloc(capacidade * sizeof(Registro));
 
     if (*vetor == NULL) {
-        printf("Erro de alocacao de memoria!\n");
         fclose(arquivo);
         return -1;
     }
 
-    // Leitura formatada do arquivo (id,nome)
-    while (fscanf(arquivo, "%d,%99[^\n]\n", &(*vetor)[quantidade].id, (*vetor)[quantidade].nome) == 2) {
+    while (fscanf(arquivo, "%d,%99[^\n]\n", &(*vetor)[quantidade].id, (*vetor)[quantidade].palavra) == 2) {
         quantidade++;
-        
-        // Realocação dinâmica de memória caso o vetor encha
         if (quantidade >= capacidade) {
             capacidade *= 2;
             Registro *temp = (Registro *) realloc(*vetor, capacidade * sizeof(Registro));
             if (temp == NULL) {
-                printf("Erro ao realocar memoria!\n");
                 fclose(arquivo);
                 return quantidade;
             }
@@ -44,57 +43,70 @@ int carregar_dados(const char *nome_arquivo, Registro **vetor) {
     }
 
     fclose(arquivo);
-    return quantidade; // Retorna a quantidade total de registros lidos
+    return quantidade;
 }
 
-// Algoritmo de Busca Binária
-// Pré-requisito: O vetor precisa estar ordenado pelo campo 'id'
-int busca_binaria(Registro *vetor, int tamanho, int id_buscado) {
+int busca_binaria_palavra(Registro *vetor, int tamanho, const string &palavra_buscada) {
     int inicio = 0;
     int fim = tamanho - 1;
 
     while (inicio <= fim) {
         int meio = inicio + (fim - inicio) / 2;
+        int comp = palavra_buscada.compare(vetor[meio].palavra);
 
-        if (vetor[meio].id == id_buscado) {
-            return meio; // Elemento encontrado (retorna o índice)
-        }
-
-        if (vetor[meio].id < id_buscado) {
-            inicio = meio + 1; // Busca na metade direita
-        } else {
-            fim = meio - 1;    // Busca na metade esquerda
-        }
+        if (comp == 0) return meio;
+        if (comp > 0) inicio = meio + 1;
+        else fim = meio - 1;
     }
 
-    return -1; // Elemento não encontrado
+    return -1;
 }
 
 int main() {
-    Registro *dados = NULL;
-    const char *arquivo_caminho = "dados.txt";
+    Registro *stop_words = NULL;
+    int total_stop_words = carregar_dados("dados.txt", &stop_words);
 
-    int total_registros = carregar_dados(arquivo_caminho, &dados);
+    if (total_stop_words <= 0) {
+        cout << "Aviso: Nenhuma stop-word carregada ou arquivo dados.txt ausente." << endl;
+    } else {
+        cout << "Sucesso: " << total_stop_words << " stop-words carregadas." << endl;
+    }
 
-    if (total_registros <= 0) {
-        printf("Nenhum dado carregado ou erro na leitura.\n");
+    ifstream arquivo("livro.txt");
+
+    if (!arquivo.is_open()) {
+        cout << "Erro! O arquivo livro.txt nao abriu!" << endl;
+        free(stop_words);
         return 1;
     }
 
-    printf("Sucesso: %d registros carregados do arquivo.\n\n", total_registros);
+    string linha;
+    int numeroDaLinha = 1;
 
-    // Teste da Busca Binaria
-    int chave_busca = 105; // Altere para o ID que deseja buscar
-    int resultado = busca_binaria(dados, total_registros, chave_busca);
+    while (getline(arquivo, linha)) {
+        stringstream leitorDeLinha(linha);
+        string palavraSuja;
 
-    if (resultado != -1) {
-        printf("[SUCESSO] ID %d encontrado no indice %d!\n", chave_busca, resultado);
-        printf("Nome do Registro: %s\n", dados[resultado].nome);
-    } else {
-        printf("[FALHA] ID %d nao foi encontrado nos dados.\n", chave_busca);
+        while (leitorDeLinha >> palavraSuja) {
+            string palavraLimpa = "";
+            for (char c : palavraSuja) {
+                if (isalnum((unsigned char)c)) {
+                    palavraLimpa += tolower((unsigned char)c);
+                }
+            }
+
+            if (!palavraLimpa.empty()) {
+                int eh_proibida = busca_binaria_palavra(stop_words, total_stop_words, palavraLimpa);
+
+                if (eh_proibida == -1) {
+                    cout << "[Linha " << numeroDaLinha << "] Palavra aceita: " << palavraLimpa << endl;
+                }
+            }
+        }
+        numeroDaLinha++;
     }
 
-    // Liberacao de memoria alocada
-    free(dados);
+    arquivo.close();
+    free(stop_words);
     return 0;
 }

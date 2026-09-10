@@ -1,0 +1,334 @@
+Engenharia de Software I — Guia de Estudos
+Resumo essencial das Aulas 1, 2 e 3 · Prof. Alcebiades Dantas Lôbo Junior · UERJ/DEPCOMP
+
+AULA 1 — Introdução à Engenharia de Software
+Por que a Engenharia de Software é importante?
+Crise do software: mais poder computacional e menos custo da tecnologia, combinados a software desenvolvido por profissionais
+sem metodologia pré-definida.
+Exemplo clássico — Therac-25: dispositivo médico cujos erros de software causaram superdosagens de radiação. Causas: código não
+revisado/testado, projeto não documentado em detalhes, documentação não explicava os códigos de erro da máquina.
+
+Definições de Software
+Sommerville (2018): programas de computador e documentação associada. Os produtos podem ser desenvolvidos para um cliente
+específico ou para um mercado genérico.
+Pressman & Maxim (2021): consiste em (1) instruções (programas) que fornecem funções/desempenho desejados; (2) estruturas de
+dados que permitem a manipulação de informações; e (3) informação descritiva (impressa ou virtual) sobre operação e uso.
+➡ Hoje, essas definições clássicas não dão conta da dimensão do software: ele está profundamente incorporado em quase todos os
+aspectos da vida.
+
+Importância do software na atualidade
+Tecnologia indispensável para os negócios
+Viabiliza novas tecnologias (ex.: engenharia genética, nanotecnologia)
+Extensão de tecnologias existentes
+Mudança radical em tecnologias antigas
+Evolução de produto para serviço
+Empresas de software estão entre as mais valiosas do mundo
+
+Hardware × Software
+Hardware
+
+Software
+
+Se desgasta (fatores ambientais)
+
+Não se desgasta, mas se deteriora com alterações ao longo do ciclo de vida (erros introduzidos)
+
+Defeitos: reposição de peças
+
+Defeitos: erro de projeto ou processo
+
+Domínios de aplicação de software
+Tipo
+
+Descrição
+
+Softwares de sistema
+
+Programas que atendem a outros programas (compiladores, editores, SO, drivers)
+
+Softwares de aplicação
+
+Programas independentes que resolvem necessidade de negócio específica
+
+Softwares embarcados
+
+Residem num produto/sistema para controlar suas funções (ex.: painel de geladeira)
+
+Linha de produtos
+
+Componentes reutilizáveis para múltiplos clientes (ex.: injeção eletrônica Bosch)
+
+Web / Mobile
+
+Navegadores, computação em nuvem, serviços, dispositivos móveis
+
+Inteligência Artificial
+
+Usa heurísticas para problemas complexos: robótica, decisão, reconhecimento de padrões, ML
+
+Software legado: desenvolvido há décadas e continuamente modificado; pode usar tecnologia ultrapassada mas é fundamental para as
+operações do dia a dia (Gartner).
+
+Engenharia de Software — definição e camadas
+IEEE ISO 24765:2017: aplicação de uma abordagem sistemática, disciplinada e quantificável no desenvolvimento, operação e
+manutenção de software — isto é, a aplicação de engenharia ao software.
+Camadas (Pressman & Maxim): Compromisso com a Qualidade (base) → Processo (metodologia para entrega efetiva + base do gerenciamento
+de projetos) → Métodos (informações técnicas: requisitos, modelagem, construção, teste, suporte) → Ferramentas (suporte
+automatizado/semiautomatizado ao processo e métodos)
+
+AULA 2 — Processo de Software e Modelos de Processo
+O que é o "processo de software"?
+Sequência de perguntas que guiam a solução de um problema: quem tem interesse na solução? quais dados/recursos/funções são
+necessários? o problema pode ser dividido em partes menores? pode ser representado graficamente? já foi resolvido algo parecido? é
+possível criar um modelo de projeto (design)? é possível testar cada parte? os resultados atendem ao que era necessário?
+Essas perguntas mapeiam, em linhas gerais, para: Comunicação e análise → Projeto/modelagem → Geração de código → Testes e
+qualidade.
+Atividades de apoio (ao longo de todo o processo)
+Controle e acompanhamento do projeto
+
+Administração de riscos
+Garantia da qualidade
+Revisões técnicas
+Medições (processo, projeto, produto)
+Gerenciamento da configuração
+Gerenciamento de reutilização
+Preparo/produção de artefatos
+Importante: não é preciso seguir o processo "à risca" — ele deve ser ágil e adaptável ao problema, projeto, equipe e cultura
+organizacional.
+
+Os 7 Princípios da Engenharia de Software (David Hooker)
+1. A razão de existir — o software deve agregar valor ao usuário.
+2. KISS (Keep It Simple, Stupid) — o mais simples possível, sem ser simplista.
+3. Mantenha a visão — integridade conceitual evita um projeto "colcha de retalhos".
+4. O que um produz, outros consomem — documente pensando em quem virá depois.
+5. Esteja aberto para o futuro — projete pensando em mudanças de hardware/software.
+6. Planeje visando reutilização — reduz custo, aumenta valor.
+7. Pense! — análise clara antes de agir produz melhores resultados.
+
+Modelos tradicionais (prescritivos)
+Conjunto prescrito de elementos e fluxo de trabalho previsível; atividades ocorrem sequencialmente, com diretrizes de progresso
+definidas.
+Cascata (sequencial linear)
+Definição de requisitos → Projeto de sistema/software → Implementação e teste unitário → Integração e teste de sistema → Operação e
+manutenção
+
+Ideal quando os requisitos são bem definidos e estáveis; resultado de cada estágio precisa de aprovação antes de iniciar o próximo. É o
+paradigma mais antigo.
+Incremental
+Intercala especificação, desenvolvimento e validação. O sistema é entregue em versões (incrementos) sucessivas, cada uma somando
+funcionalidade — reflete como resolvemos problemas passo a passo. Relacionado à prototipação.
+Evolucionário (Espiral)
+Assume que requisitos mudam frequentemente. Une a natureza iterativa da prototipação aos aspectos sistemáticos e controlados da
+cascata. Pode ser aplicado ao longo de toda a vida do software (não termina na entrega).
+Integração e Configuração (orientado a reuso)
+Especificação de requisitos → Análise de componentes/refinamento → Adaptação/configuração dos componentes → Integração do sistema
+
+Baseia-se em componentes/sistemas reusáveis já disponíveis; foco em configurar e integrar, não em desenvolver do zero.
+Unificado (RUP)
+Modelo híbrido: prototipação + incremental + iterativo. Orientado a objetos, documentado em UML. Fases: Concepção (visão do projeto)
+→ Elaboração (pontos de maior risco) → Construção (desenvolvimento principal) → Transição (implantação).
+Boas práticas do RUP: desenvolver iterativamente, gerenciar requisitos, usar arquitetura baseada em componentes, modelar
+visualmente, verificar qualidade, controlar mudanças.
+Limitação: voltado a sistemas grandes/críticos; o tempo de desenvolvimento pode não acompanhar as demandas atuais (ciclos de vida
+menores).
+
+Comparativo dos modelos prescritivos
+Modelo
+
+Prós
+
+Contras
+
+Cascata
+
+Fácil de entender/planejar; bom p/ projetos pequenos e bem
+compreendidos
+
+Não se adapta bem a mudanças; teste só no final; aprovação do cliente
+só no final
+
+Prototipação
+
+Reduz impacto de mudanças; cliente envolvido desde o início; menor
+rejeição do produto
+
+Pode atrasar; risco de "empacotar" o protótipo; trabalho descartado;
+difícil de planejar
+
+Espiral
+
+Envolvimento contínuo do cliente; riscos gerenciados; bom p/ sistemas
+grandes/complexos
+
+Falha na análise de risco pode ser fatal; difícil de gerenciar; exige
+equipe especializada
+
+Unificado
+
+Documentação de alta qualidade; envolvimento contínuo; adapta-se a
+mudanças; bom p/ manutenção
+
+Casos de uso nem sempre precisos; integração complexa; sobreposição
+de fases; equipe especializada
+
+Orientado a
+reuso
+
+Reduz software a desenvolver, custos e riscos
+
+Concessões nos requisitos podem não atender ao usuário; perda de
+controle sobre a evolução
+
+Não existe um modelo "melhor" — a escolha depende de: tamanho do sistema, tipo de sistema, tempo de vida esperado, organização
+da equipe, regulamentação externa (→ leva ao tema processos e agilidade, da Aula 3).
+
+AULA 3 — Processos de Software Ágeis
+Dirigido por planos × Ágil
+Dirigido por planos
+
+Ágil
+
+Especificação de requisitos → Projeto/implementação
+
+Requisitos e projeto/implementação evoluem juntos, de forma incremental
+
+Mudanças exigem solicitações formais
+
+Aceita e incorpora mudanças continuamente
+
+O Manifesto Ágil (2001)
+"Estamos descobrindo maneiras melhores de desenvolver software, fazendo-o nós mesmos e ajudando outros a fazerem o mesmo."
+Valorizamos mais os itens à esquerda (embora haja valor nos da direita):
+Indivíduos e interações mais que processos e ferramentas
+Software em funcionamento mais que documentação abrangente
+Colaboração com o cliente mais que negociação de contratos
+Responder a mudanças mais que seguir um plano
+
+Princípios dos métodos ágeis
+1. Envolvimento do cliente — cliente participa ativamente, prioriza requisitos e avalia iterações.
+2. Entrega incremental — software entregue em incrementos definidos com o cliente.
+3. Pessoas, não processos — habilidades da equipe são reconhecidas; sem processos prescritivos rígidos.
+4. Aceitar mudanças — o sistema deve ser projetado para acomodar mudanças de requisitos.
+5. Manter a simplicidade — eliminar complexidade do software e do processo sempre que possível.
+Limitações da agilidade
+Mais fácil em equipes pequenas (difícil escalar); informalidade pode conflitar com contratos legais de grandes empresas; priorizar
+mudanças é difícil com muitas partes interessadas; mais adequado a software novo do que a manutenção; pensado para equipes colocalizadas, mas hoje times são globalmente distribuídos. Não é a antítese da engenharia de software confiável.
+
+Métodos ágeis populares
+Scrum · Extreme Programming (XP) · Kanban · DevOps
+
+Scrum — Foco do curso
+Origem
+Idealizado em 1993 por Jeff Sutherland e Ken Schwaber; apresentado em 1995. Nome inspirado numa jogada do Rugby. Objetivo:
+ajudar pessoas e equipes a entregar valor de forma incremental e colaborativa.
+
+Papéis do Scrum
+Papel
+
+Responsabilidade principal
+
+Product
+Owner (PO)
+
+Gerencia o Product Backlog: define e comunica o objetivo do produto, cria/prioriza itens, garante transparência. Maior responsabilidade: gerar
+valor para o negócio e clientes.
+
+Scrum
+Master
+(SM)
+
+Garante que o Scrum seja entendido e praticado por todos. Ajuda o Time Scrum (autogestão, remoção de impedimentos), o PO (backlog,
+planejamento) e a organização (adoção do Scrum). É quem mais conhece o Scrum entre os papéis.
+
+Developers
+
+Entregam o incremento utilizável ao final do ciclo: definem o Sprint Backlog, garantem qualidade (definição de "pronto"), adaptam o plano
+diário. Auto-organizáveis e multifuncionais.
+
+Artefatos do Scrum
+Artefato
+
+Descrição
+
+Product Backlog
+
+Lista de requisitos a implementar (user stories, melhorias, bugs). Controlado pelo PO.
+
+Sprint Backlog
+
+Itens retirados do Product Backlog que definem o objetivo do sprint — em desenvolvimento.
+
+Incremento do Produto
+
+Passo concreto rumo à meta do produto; soma-se aos incrementos anteriores; só conta se atender à Definição de Pronto.
+
+Eventos do Scrum (dentro da Sprint)
+Evento
+
+O que é
+
+Sprint
+
+Coração do Scrum. Duração fixa (até 4 semanas). Novo Sprint começa logo após o anterior. Engloba todos os demais eventos.
+
+Sprint Planning
+
+PO indica o incremento desejado; SM e Developers selecionam itens do Sprint Backlog e definem como entregá-los.
+
+Daily Scrum
+
+Até 15 min, diário, organizado pelo SM. Perguntas: o que fiz? quais obstáculos? o que farei até a próxima reunião?
+
+Sprint Review
+
+Fim do Sprint (até 4h p/ sprint de 4 semanas). Demonstração do incremento; PO aceita ou não o incremento.
+
+Sprint Retrospective
+
+Até 3h; discute o que deu certo, o que pode melhorar e compromissos para o próximo sprint.
+
+User Stories
+Estrutura: Como [QUEM] eu quero [O QUE] para que [POR QUÊ] — colocar-se no lugar do usuário do sistema. (Mike Cohn)
+
+Planning Poker (estimativa de complexidade)
+Cartas seguem a sequência de Fibonacci. Processo: discutir a história → jogar as cartas → comparar e discutir. Benefícios: consenso,
+precisão, engajamento.
+Carta
+
+Significado
+
+0
+
+Sem esforço necessário (trivial/já feito)
+
+1
+
+Muito simples
+
+2
+
+Simples
+
+3
+
+Complexidade moderada
+
+5
+
+Complexa
+
+8
+
+Muito complexa
+
+13
+
+Extremamente complexa
+
+?
+
+Incerto, precisa de mais informação
+
+Resumo do Framework Scrum: Regras/Fluxo · Papéis · Valores · Artefatos · Eventos — todos orbitando o núcleo do Scrum.
+
+
